@@ -10,4 +10,12 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
+    public function user()
+    {
+        return view('admin.user');
+    }
+    public function kandidat()
+    {
+        return view('admin.data_kandidat');
+    }
 }
