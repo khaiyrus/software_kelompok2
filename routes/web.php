@@ -17,3 +17,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function(){
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
 });
+Route::middleware(['auth', 'role:panitia'])->prefix('panitia')->name('panitia.')->group(function(){
+    Route::view('/dashboard', 'panitia.dashboard')->name('dashboard');
+});
+Route::middleware(['auth', 'role:kandidat'])->prefix('kandidat')->name('kandidat.')->group(function(){
+    Route::view('/profile', 'kandidat.profile')->name('dashboard');
+});

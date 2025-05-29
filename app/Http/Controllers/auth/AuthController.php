@@ -29,6 +29,7 @@ class AuthController extends Controller
             'role' => 'required|in:panitia,kandidat',
         ]);
 
+        // dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -51,7 +52,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return redirect()->route(Auth::user()->role.'.dashboard');
         }
 
         return back()->withErrors([
