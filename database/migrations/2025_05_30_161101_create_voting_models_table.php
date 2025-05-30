@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('acara');
             $table->boolean('status')->default(false);
             $table->unsignedBigInteger('wilayah_id');
-            $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
+            // $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
             $table->timestamps();
         });
     }

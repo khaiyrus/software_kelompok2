@@ -32,43 +32,42 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="m-sm-4">
-                                    <form method="POST" action="{{ route('admin.user_add_proses') }}">
+                                    <form method="POST" action="{{ route('admin.voting_add_proses') }}">
                                         @csrf
                                         <div class="card-body pt-5 mt-4">
-                                            <a href="{{ route('admin.user') }}"
+                                            <a href="{{ route('admin.voting') }}"
                                                 class="btn btn-outline-primary position-absolute top-0 start-0 m-3">
                                                 ← Back
                                             </a>
                                         </div>
+
                                         <div class="mb-3">
-                                            <label class="form-label">Name</label>
-                                            <input class="form-control form-control-lg" type="text" name="name"
-                                                placeholder="Enter your name" />
+                                            <label class="form-label">Nama Acara</label>
+                                            <input class="form-control form-control-lg" type="text" name="acara"
+                                                placeholder="Nama Acara" required />
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Email</label>
-                                            <input class="form-control form-control-lg" type="email" name="email"
-                                                placeholder="Enter your email" />
+
+                                        <div class="form-group mb-3">
+                                            <label class="label">Pilih Wilayah</label>
+                                            <div class="form-group position-relative">
+                                                <select name="wilayah_id" class="form-select form-control ps-5 h-58"
+                                                    required>
+                                                    <option value="" disabled selected>Pilih Wilayah</option>
+                                                    @foreach ($wilayah as $a)
+                                                        <option value="{{ $a->id }}" class="text-dark">
+                                                            {{ $a->nama_wilayah }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Password</label>
-                                            <input class="form-control form-control-lg" type="password" name="password"
-                                                placeholder="Enter password" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="role" class="form-label">Daftar Sebagai</label>
-                                            <select name="role" id="role" class="form-select" required>
-                                                <option value="" disabled selected>Pilih Role</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="panitia">Panitia</option>
-                                                <option value="kandidat">Kandidat</option>
-                                            </select>
-                                        </div>
+
+                                        <input type="hidden" name="user_id" value="{{ Auth::id() }}" />
+
                                         <div class="text-center mt-3">
-                                            {{-- <a href="index.html" class="btn btn-lg btn-primary">Sign up</a> --}}
-                                            <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+                                            <button type="submit" class="btn btn-lg btn-primary">Buat Voting</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

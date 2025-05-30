@@ -38,14 +38,14 @@
                         Tools & Components
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ request()->routeIs('admin.voter') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.voter') }}">
                             <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Voter</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="ui-forms.html">
+                    <li class="sidebar-item {{ request()->routeIs('admin.voting') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('admin.voting') }}">
                             <i class="align-middle" data-feather="check-square"></i> <span
                                 class="align-middle">Forms</span>
                         </a>

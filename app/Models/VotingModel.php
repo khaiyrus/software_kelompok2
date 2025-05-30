@@ -12,4 +12,7 @@ class VotingModel extends Model
         'user_id',
         'wilayah_id'
     ];
+    public function wilayah () {
+        return $this->belongsTo(WilayahModel::class, 'wilayah_id', 'id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\VoteModel;
+use App\Models\VotingModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\WilayahModel;
@@ -106,7 +107,7 @@ class AdminController extends Controller
         return redirect()->route('admin.wilayah');
     }
 
-////////////////voter//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////voter/////////////////////////////////////////////////////////////////////////////////////////////////////
     public function voter()
     {   $vote=VoteModel::all();
         return view('admin.voter.data_voter', compact('vote'));
@@ -157,5 +158,59 @@ class AdminController extends Controller
 
         return redirect()->route('admin.voter');
     }
+    ///////////////////////////////voting////////////////////////////////////////
 
+    public function voting(){
+        $voting=VotingModel::all();
+        return view('admin.acara.voting', compact('voting'));
+    }
+    public function voting_add(){
+
+        $wilayah=WilayahModel::all();
+        return view('admin.acara.add_voting', compact('wilayah'));
+    }
+    public function voting_add_proses(Request $request)
+    {
+
+        $request->validate([
+        'acara'      => 'required|string|max:255',
+        'wilayah_id' => 'required|exists:wilayah,id',
+    ]);
+
+    VotingModel::create([
+        'acara'      => $request->acara,
+        'status'     => false,
+        'wilayah_id' => $request->wilayah_id,
+    ]);
+
+    return redirect()->route('admin.voting')->with('success', 'Voting berhasil dibuat.');
+}
+public function voting_edit ($id) {
+        $wilayah=WilayahModel::all();
+        $voting = VotingModel::where('id', $id)->first();
+        return view('admin.acara.edit_voting', compact('voting', 'wilayah'));
+    }
+
+
+    public function voting_edit_proses (Request $request, $id) {
+
+        $request->validate([
+        'acara'      => 'required|string|max:255',
+        'wilayah_id' => 'required|exists:wilayah,id',]);
+
+        $voting = VotingModel::where('id',$id)->first();
+
+        $voting->acara = $request->acara;
+        $voting->status = $request->status;
+        $voting->wilayah_id = $request->wilayah_id;
+        $voting->save();
+
+        return redirect()->route('admin.voting');
+}
+public function voting_hapus ($id){
+        $voting = VotingModel::where('id', $id)->first();
+        $voting->delete();
+
+        return redirect()->route('admin.voting');
+    }
 }
