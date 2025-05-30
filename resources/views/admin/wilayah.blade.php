@@ -6,9 +6,9 @@
                 <h1 class="mb-4">Data Admin</h1>
 
                 <!-- Tombol Tambah -->
-                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahdata">
+                <a href="{{ route('admin.wilayah_add') }}"class="btn btn-primary mb-3"  >
                     Tambah Data
-                </button>
+                </a>
 
                 <!-- Card Table -->
                 <div class="card">
@@ -32,7 +32,7 @@
                                             data-bs-target="#updatedata25">
                                             <i data-feather="edit"></i>
                                         </button>
-                                        <a href="{{ url('data_admin/delete/25') }}" class="btn btn-sm btn-danger">
+                                        <a href="" class="btn btn-sm btn-danger">
                                             <i data-feather="trash"></i>
                                         </a>
                                     </td>
@@ -46,7 +46,7 @@
                                             data-bs-target="#updatedata40">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <a href="{{ url('data_admin/delete/40') }}" class="btn btn-sm btn-danger">
+                                        <a href="" class="btn btn-sm btn-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>

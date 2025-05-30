@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VoteHistoryModel extends Model
+class WilayahModel extends Model
 {
+    protected $table = 'wilayah';
     protected $fillable = [
-        'vote_id',
-        'candidate_id',
-
+        'nama_wilayah',
     ];
 }

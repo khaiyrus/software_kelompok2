@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoteModel extends Model
 {
+    protected $table = 'voter';
     protected $fillable = [
-        'vote_id',
-        'voter_id',
-        'candidate_id',
-        'vote_time',
+        'nik',
+        'nama',
+        'status',
     ];
 }
