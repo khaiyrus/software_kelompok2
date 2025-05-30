@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('sidebar')
+    @include('admin.side-bar')
+@endsection
+
 @section('content')
     <div class="container-fluid p-0">
 

@@ -28,20 +28,14 @@
                 <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
                     <div class="d-table-cell align-middle">
 
-                        <div class="text-center mt-4">
-                            <h1 class="h2">Get started</h1>
-                            <p class="lead">
-                                Start creating the best possible user experience for you customers.
-                            </p>
-                        </div>
 
                         <div class="card">
                             <div class="card-body">
                                 <div class="m-sm-4">
-                                    <form method="POST" action="{{ route('register') }}">
+                                    <form method="POST" action="{{ route('admin.user_add_proses') }}">
                                         @csrf
                                         <div class="card-body pt-5 mt-4">
-                                            <a href="/"
+                                            <a href="{{ route('admin.user') }}"
                                                 class="btn btn-outline-primary position-absolute top-0 start-0 m-3">
                                                 ← Back
                                             </a>
@@ -65,6 +59,7 @@
                                             <label for="role" class="form-label">Daftar Sebagai</label>
                                             <select name="role" id="role" class="form-select" required>
                                                 <option value="" disabled selected>Pilih Role</option>
+                                                <option value="admin">Admin</option>
                                                 <option value="panitia">Panitia</option>
                                                 <option value="kandidat">Kandidat</option>
                                             </select>

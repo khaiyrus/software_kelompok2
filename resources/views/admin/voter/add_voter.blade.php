@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('sidebar')
+    @include('admin.side-bar')
+@endsection
+
 @section('content')
     <div class="d-sm-flex text-center justify-content-between align-items-center mb-4">
         <h3 class="mb-sm-0 mb-1 fs-18">Form Add Wilayah</h3>

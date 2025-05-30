@@ -17,7 +17,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function(){
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
-
+    Route::get('/user_add', [AdminController::class, 'user_add'])->name('user_add');
+    Route::post('/user_add', [AdminController::class, 'user_add_proses'])->name('user_add_proses');
 
 
     Route::get('/kandidat', [AdminController::class, 'kandidat'])->name('kandidat');

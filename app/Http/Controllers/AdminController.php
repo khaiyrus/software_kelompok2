@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\VoteModel;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,36 @@ class AdminController extends Controller
     public function user()
     {
         $user=User::all();
-        return view('admin.user', compact('user'));
+        return view('admin.user.user', compact('user'));
     }
+    public function user_add()
+    {
+
+        return view('admin.user.add_user');
+    }
+    public function user_add_proses(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'role' => 'required|in:admin,panitia,kandidat',
+        ]);
+
+        // dd($request->all());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+
+        ]);
+
+        // Redirect atau tampilkan notifikasi
+        return redirect()->route('admin.user')->with('success');
+    }
+    ////////////////////////candidat profile/////////////////////////////////////////////////////////////////////////////////
     public function kandidat()
     {
         return view('admin.data_kandidat');
