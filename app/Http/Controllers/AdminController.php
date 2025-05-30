@@ -21,11 +21,13 @@ class AdminController extends Controller
     }
     public function wilayah()
     {
-        return view('admin.wilayah');
+        $wilayah=WilayahModel::all();
+        return view('admin.wilayah.wilayah', compact('wilayah'));
     }
     public function wilayah_add()
     {
-        return view('admin.wilayah_add');
+
+        return view('admin.wilayah.wilayah_add');
     }
     public function wilayah_add_proses(Request $request)
     {
@@ -41,7 +43,7 @@ class AdminController extends Controller
         ]);
 
         // Redirect atau tampilkan notifikasi
-        return redirect()->route('wilayah_add')->with('success');
+        return redirect()->route('admin.wilayah')->with('success');
     }
 
 
