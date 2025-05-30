@@ -10,4 +10,8 @@ class WilayahModel extends Model
     protected $fillable = [
         'nama_wilayah',
     ];
+
+    public function voter(){
+        return $this->hasMany(VoteModel::class, 'wilayah_id', 'id');
+    }
 }

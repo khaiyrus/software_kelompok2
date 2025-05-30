@@ -11,5 +11,11 @@ class VoteModel extends Model
         'nik',
         'nama',
         'status',
+        'wilayah_id',
     ];
+
+    public function wilayah() {
+        return $this->belongsTo(WilayahModel::class, 'wilayah_id', 'id');
+    }
 }
+

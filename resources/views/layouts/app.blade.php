@@ -34,26 +34,26 @@
                         Pages
                     </li>
 
-                    <li class="sidebar-item active">
+                    <li class="sidebar-item  {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.dashboard') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span
                                 class="align-middle">Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ request()->routeIs('admin.user') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.user') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">User</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ request()->routeIs('admin.kandidat') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.kandidat') }}">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">Candidat</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ request()->routeIs('admin.wilayah') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.wilayah') }}">
                             <i class="align-middle" data-feather="map"></i> <span class="align-middle">Wilayah</span>
                         </a>
@@ -64,8 +64,8 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="ui-buttons.html">
-                            <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+                        <a class="sidebar-link" href="{{ route('admin.voter') }}">
+                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Voter</span>
                         </a>
                     </li>
 
