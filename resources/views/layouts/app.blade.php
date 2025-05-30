@@ -19,11 +19,6 @@
 
     <link href="{{ asset('build') }}/assets/css/app.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script>
-        feather.replace();
-    </script>
 </head>
 
 <body>
@@ -124,11 +119,22 @@
                         </a>
                     </li>
                 </ul>
+
+                <div class="sidebar-cta">
+                    <div class="sidebar-cta-content">
+                        <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+                        <div class="mb-3 text-sm">
+                            Are you looking for more components? Check out our premium version.
+                        </div>
+                        <div class="d-grid">
+                            <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
+
         <div class="main">
-
-
             <nav class="navbar navbar-expand navbar-light navbar-bg">
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
@@ -230,8 +236,7 @@
                                             <div class="col-10 ps-2">
                                                 <div class="text-dark">Vanessa Tucker</div>
                                                 <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis
-                                                    arcu
-                                                    tortor.</div>
+                                                    arcu tortor.</div>
                                                 <div class="text-muted small mt-1">15m ago</div>
                                             </div>
                                         </div>
@@ -245,8 +250,7 @@
                                             <div class="col-10 ps-2">
                                                 <div class="text-dark">William Harris</div>
                                                 <div class="text-muted small mt-1">Curabitur ligula sapien euismod
-                                                    vitae.
-                                                </div>
+                                                    vitae.</div>
                                                 <div class="text-muted small mt-1">2h ago</div>
                                             </div>
                                         </div>
@@ -286,58 +290,47 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <!-- Icon untuk tampilan mobile -->
                             <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
                                 data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
 
-                            <!-- Avatar + Nama untuk tampilan desktop -->
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
                                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"
                                     alt="Charles Hall" />
                                 <span class="text-dark">{{ Auth::user()->name }}</span>
                             </a>
-
-                            <!-- Dropdown Menu -->
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="pages-profile.html">
-                                    <i class="align-middle me-1" data-feather="user"></i> Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="align-middle me-1" data-feather="pie-chart"></i> Analytics
-                                </a>
+                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
+                                        data-feather="user"></i> Profile</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                        data-feather="pie-chart"></i> Analytics</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="index.html">
-                                    <i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="align-middle me-1" data-feather="help-circle"></i> Help Center
-                                </a>
+                                <a class="dropdown-item" href="index.html"><i class="align-middle me-1"
+                                        data-feather="settings"></i> Settings & Privacy</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                        data-feather="help-circle"></i> Help Center</a>
                                 <div class="dropdown-divider"></div>
-
-                                <!-- Tombol Logout (menggunakan POST) -->
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="align-middle me-1" data-feather="log-out"></i> Log out
                                 </a>
 
-                                <!-- Form Logout (disembunyikan) -->
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="">
                                     @csrf
                                 </form>
                             </div>
                         </li>
-
                     </ul>
                 </div>
             </nav>
-            <div class="content">
-            @yield('content')
+
+            <main class="content">
+                @yield('content')
             </main>
-            </div>
+
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row text-muted">
@@ -596,14 +589,6 @@
             });
         });
     </script>
-
-    </div>
-    <footer class="footer-area bg-white text-center rounded-top-10">
-        <p class="fs-14">© <span class="text-primary">Virus</span> is Proudly Owned by <a
-                href="https://hibootstrap.com/" target="_blank" class="text-decoration-none">laravel
-                --Bootstrap--</a></p>
-    </footer>
-    </div>
 
 </body>
 
