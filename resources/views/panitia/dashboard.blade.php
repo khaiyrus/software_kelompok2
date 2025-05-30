@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('sidebar')
+    @include('admin.side-bar')
+@endsection
+
 @section('content')
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle">

@@ -46,4 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function profil() {
+        return $this->hasOne(CandidateProfile::class, 'user_id', 'id');
+    }
 }

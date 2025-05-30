@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KandidatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,7 +45,11 @@ Route::middleware(['auth', 'role:panitia'])->prefix('panitia')->name('panitia.')
 });
 
 Route::middleware(['auth', 'role:kandidat'])->prefix('kandidat')->name('kandidat.')->group(function(){
-    Route::view('/profile', 'kandidat.profile')->name('dashboard');
+    Route::view('/dashboard', 'kandidat.dashboard')->name('dashboard');
+
+    Route::get('/profile', [KandidatController::class, 'profile'])->name('profile');
+    Route::get('/profile_add', [KandidatController::class, 'profile_add'])->name('add_profile');
+    Route::post('/profile_add_proses', [KandidatController::class, 'profile_add_proses'])->name('profile_add_proses');
 });
 Route::get('/voting', function (){
     return view('voting');
