@@ -18,4 +18,8 @@ class AdminController extends Controller
     {
         return view('admin.data_kandidat');
     }
+    public function wilayah()
+    {
+        return view('admin.wilayah');
+    }
 }

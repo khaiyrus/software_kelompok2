@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('candidate_profiles', function (Blueprint $table) {
-    $table->id('profil_id');
+    $table->id();
     $table->unsignedBigInteger('user_id');
-    $table->string('visi', 100);
-    $table->string('misi', 100);
-    $table->string('photo', 100)->nullable();
+    $table->string('visi');
+    $table->string('misi');
+    $table->string('photo')->nullable();
+    $table->unsignedBigInteger('wilayah_id');
     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+    $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
     $table->timestamps();
 });
     }

@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('votes', function (Blueprint $table) {
-    $table->id('vote_id');
-    $table->unsignedBigInteger('voter_id');
-    $table->unsignedBigInteger('candidate_id');
-    $table->integer('vote_time');
-    $table->foreign('voter_id')->references('id')->on('users');
-    $table->foreign('candidate_id')->references('id')->on('users');
+        Schema::create('voter', function (Blueprint $table) {
+    $table->id();
+    $table->string('nik');
+    $table->string('nama');
+    $table->boolean('status');
+    $table->unsignedBigInteger('wilayah_id');
+    $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
+
     $table->timestamps();
 });
     }

@@ -18,6 +18,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
     Route::get('/user', [AdminController::class, 'user'])->name('user');
     Route::get('/kandidat', [AdminController::class, 'kandidat'])->name('kandidat');
+    Route::get('/wilayah', [AdminController::class, 'wilayah'])->name('wilayah');
 });
 
 
