@@ -4,23 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('voter', function (Blueprint $table) {
-    $table->id();
-    $table->string('nik');
-    $table->string('nama');
-    $table->boolean('status');
-    $table->unsignedBigInteger('wilayah_id');
-    $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
+            $table->id();
+            $table->string('nik');
+            $table->string('nama');
+            $table->boolean('status');
+            $table->unsignedBigInteger('wilayah_id');
+            $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
     }
 
     /**

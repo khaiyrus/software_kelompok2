@@ -2,6 +2,7 @@
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KandidatController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::post('/voter_add', [AdminController::class, 'voter_add_proses'])->name('voter_add_proses');
         Route::get('/voter_edit/{id}', [AdminController::class, 'voter_edit'])->name('voter_edit');
         Route::post('/voter_edit/{id}', [AdminController::class, 'voter_edit_proses'])->name('voter_edit_proses');
+        Route::get('/voter_hapus/{id}', [AdminController::class, 'voter_hapus'])->name('voter_hapus');
 
         Route::get('/voting', [AdminController::class, 'voting'])->name('voting');
         Route::get('/voting_add', [AdminController::class, 'voting_add'])->name('voting_add');
@@ -64,6 +66,10 @@ Route::middleware(['auth', 'role:kandidat'])
         Route::get('/profile_add', [KandidatController::class, 'profile_add'])->name('add_profile');
         Route::post('/profile_add_proses', [KandidatController::class, 'profile_add_proses'])->name('profile_add_proses');
     });
-Route::get('/voting', function () {
-    return view('voting');
-})->name('voting');
+
+Route::get('/voting', [VoteController::class, 'formCek'])->name('voting.formCek');
+Route::post('/voting', [VoteController::class, 'cek'])->name('voting.cek');
+Route::get('/voting/vote', [VoteController::class, 'formVote'])->name('voting.formVote')->middleware('voterCek');
+Route::post('/voting/vote', [VoteController::class, 'voteSubmit'])->name('voting.submit')->middleware('voterCek');
+Route::get('/voting/result', [VoteController::class, 'result'])->name('voting.result')->middleware('voterCek');
+Route::get('/keluar', [VoteController::class, 'keluar'])->name('keluar')->middleware('voterCek');

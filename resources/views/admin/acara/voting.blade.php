@@ -22,6 +22,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Acara</th>
+                                    <th>Voting Sampai</th>
                                     <th>Wilayah</th>
                                     <th>Status</th>
                                     <th class="text-center">Action</th>
@@ -32,6 +33,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $a->acara }}</td>
+                                        <td>{{ $a->voting_sampai }}</td>
                                         <td>{{ $a->wilayah->nama_wilayah }}</td>
                                         <td>
                                             {{ $a->status == 1 ? 'Sudah Selesai' : 'Belum Selesai' }}

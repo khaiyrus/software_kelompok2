@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function profil() {
         return $this->hasOne(CandidateProfile::class, 'user_id', 'id');
     }
+
+    public function history () {
+        return $this->hasMany(VoteHistoryModel::class, 'candidate_id', 'id');
+    }
 }

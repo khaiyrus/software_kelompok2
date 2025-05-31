@@ -9,23 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+     public function up(): void
     {
         Schema::table('voting_models', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->time('voting_sampai')->nullable()->change();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('voting_models', function (Blueprint $table) {
-
-            $table->unsignedBigInteger('user_id')->after('wilayah_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->dateTime('voting_sampai')->nullable()->change();
         });
     }
 };

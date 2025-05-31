@@ -46,6 +46,11 @@
                                             <input class="form-control form-control-lg" type="text" name="acara"
                                                 placeholder="Nama Acara" required />
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Voting Sampai</label>
+                                            <input class="form-control form-control-lg" type="time" name="voting_sampai"
+                                                placeholder="Nama Acara" required />
+                                        </div>
 
                                         <div class="form-group mb-3">
                                             <label class="label">Pilih Wilayah</label>

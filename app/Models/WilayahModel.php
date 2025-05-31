@@ -17,4 +17,7 @@ class WilayahModel extends Model
     public function profil(){
         return $this->hasMany(CandidateProfile::class, 'wilayah_id', 'id');
     }
+    public function acara(){
+        return $this->hasMany(VotingModel::class, 'wilayah_id', 'id');
+    }
 }

@@ -20,7 +20,7 @@
                                     <label class="label">Masukkan NIK </label>
                                     <div class="form-group position-relative">
                                         <input type="text" name="nik" class="form-control text-dark ps-5 h-58"
-                                            placeholder=" Masukkan NIK" required>
+                                            placeholder=" Masukkan NIK" required maxlength="16">
                                         <i
                                             class="ri-hashtag position-absolute top-50 start-0 translate-middle-y fs-20 text-gray-light ps-20"></i>
                                     </div>
@@ -36,12 +36,15 @@
                                             class="ri-hashtag position-absolute top-50 start-0 translate-middle-y fs-20 text-gray-light ps-20"></i>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="col-lg-6">
                                 <div class="form-group mb-4">
-                                    <label class="label">Pilih Jabatan</label>
+                                    <label class="label">Pilih Wilayah</label>
                                     <div class="form-group position-relative">
                                         <select name="wilayah_id" class="form-select form-control ps-5 h-58"
                                             aria-label="Pilih Wilayah" required>
-                                            <option value="" disabled selected>Pilih Jabatan</option>
+                                            <option value="" disabled selected>Pilih Wilayah</option>
                                             @foreach ($wilayah as $a)
                                                 <option value="{{ $a->id }}" class="text-dark">
                                                     {{ $a->nama_wilayah }}</option>
@@ -52,7 +55,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <label class="label">Pilih Acara</label>
+                                    <div class="form-group position-relative">
+                                        <select name="voting_model_id" class="form-select form-control ps-5 h-58"
+                                            aria-label="Pilih Acara" required>
+                                            <option value="" disabled selected>Pilih Acara</option>
+                                            @foreach ($acara as $a)
+                                                <option value="{{ $a->id }}" class="text-dark">
+                                                    {{ $a->acara }}</option>
+                                            @endforeach
+                                        </select>
+                                        <i
+                                            class="ri-briefcase-line position-absolute top-50 start-0 translate-middle-y fs-20 text-gray-light ps-20"></i>
+                                    </div>
+                                </div>
 
+                            </div>
                             <div class="text-end">
                                 <button type="submit"
                                     class="btn btn-primary bg-primary bg-opacity-10 text-primary border-0 fw-semibold py-2 px-4">Submit</button>
