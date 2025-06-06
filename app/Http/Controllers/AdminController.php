@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CandidateProfile;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\VoteModel;
@@ -9,6 +10,7 @@ use App\Models\VotingModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\WilayahModel;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -48,8 +50,15 @@ class AdminController extends Controller
     ////////////////////////candidat profile///////////////////////////////////////////////////////////////////
     public function kandidat()
     {
-        return view('admin.kandidat.data_kandidat');
+        $kandidat = CandidateProfile::all();
+        return view('admin.kandidat.data_kandidat', compact('kandidat'));
     }
+    public function profile_add()
+    {
+        $wilayah = WilayahModel::all();
+        return view('admin.kandidat.add_candidat', compact('wilayah'));
+    }
+
 
     // wilayah/////////////////////////////////////////////////////////////////////////////////////////
     public function wilayah()
@@ -225,5 +234,11 @@ class AdminController extends Controller
         $voting->delete();
 
         return redirect()->route('admin.voting');
+    }
+    ///////////////////////////GALERY ///////////////////////////
+    public function galery()
+    {
+        $galery = CandidateProfile::all();
+        return view('admin.kandidat.data_galery', compact('galery'));
     }
 }

@@ -40,12 +40,14 @@
                             <i class="align-middle" data-feather="map"></i> <span class="align-middle">Wilayah</span>
                         </a>
                     </li>
-
-
-
-
                     <li class="sidebar-item {{ request()->routeIs('admin.voting') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.voting') }}">
+                            <i class="align-middle" data-feather="bookmark"></i> <span
+                                class="align-middle">Forms</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.galery') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('admin.galery') }}">
                             <i class="align-middle" data-feather="bookmark"></i> <span
                                 class="align-middle">Forms</span>
                         </a>

@@ -12,7 +12,8 @@ class KandidatController extends Controller
 {
     public function index()
     {
-        return view('kandidat.dashboard');
+        $roles = User::select('role')->distinct()->pluck('role');
+        return view('kandidat.dashboard', compact('user'));
     }
     public function profile()
     {

@@ -2,6 +2,7 @@
 use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KandidatController;
+use App\Http\Controllers\PanitiaController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/voting_edit/{id}', [AdminController::class, 'voting_edit'])->name('voting_edit');
         Route::post('/voting_edit/{id}', [AdminController::class, 'voting_edit_proses'])->name('voting_edit_proses');
         Route::get('/voting_hapus/{id}', [AdminController::class, 'voting_hapus'])->name('voting_hapus');
+
+        Route::get('/galery', [AdminController::class, 'galery'])->name('galery');
     });
 
 Route::middleware(['auth', 'role:panitia'])
@@ -54,6 +57,7 @@ Route::middleware(['auth', 'role:panitia'])
     ->name('panitia.')
     ->group(function () {
         Route::view('/dashboard', 'panitia.dashboard')->name('dashboard');
+        Route::get('/user', [PanitiaController::class, 'user'])->name('user');
     });
 
 Route::middleware(['auth', 'role:kandidat'])
@@ -67,6 +71,9 @@ Route::middleware(['auth', 'role:kandidat'])
         Route::post('/profile_add_proses', [KandidatController::class, 'profile_add_proses'])->name('profile_add_proses');
     });
 
+
+
+    
 Route::get('/voting', [VoteController::class, 'formCek'])->name('voting.formCek');
 Route::post('/voting', [VoteController::class, 'cek'])->name('voting.cek');
 Route::get('/voting/vote', [VoteController::class, 'formVote'])->name('voting.formVote')->middleware('voterCek');

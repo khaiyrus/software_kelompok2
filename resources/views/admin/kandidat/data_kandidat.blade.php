@@ -5,20 +5,48 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        
-						<div class="col-12 col-md-6">
-							<div class="card">
-								<img class="card-img-top" src="img/photos/unsplash-1.jpg" alt="Unsplash">
-								<div class="card-header">
-									<h5 class="card-title mb-0">Card with image and links</h5>
-								</div>
-								<div class="card-body">
-									<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-									<a href="#" class="card-link">Card link</a>
-									<a href="#" class="card-link">Another link</a>
-								</div>
-							</div>
-						</div>
-					</div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Data Candidat</h1>
+
+                <!-- Card Table -->
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <table id="data_tabel" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Foto</th>
+                                    <th>Nama</th>
+                                    <th>Visi</th>
+                                    <th>Misi</th>
+                                    <th>Wilayah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kandidat as $a)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <img src="{{ asset('storage/' . $a->photo) }}" alt="" width="80"
+                                                height="80">
+                                        </td>
+                                        <td>
+                                            <h5>{{ $a->kandidat->name }}</h5>
+                                        </td>
+                                        <td>{{ $a->visi }}</td>
+                                        <td>{{ $a->misi }}</td>
+                                        <td>{{ $a->wilayah->nama_wilayah }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
