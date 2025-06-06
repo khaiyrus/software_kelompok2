@@ -12,10 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wilayah', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_wilayah');
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('nama_wilayah');
+    $table->enum('level', ['kota', 'kabupaten', 'provinsi']);
+    $table->unsignedBigInteger('parent_id')->nullable(); // Wilayah induk
+    $table->foreign('parent_id')->references('id')->on('wilayah')->onDelete('cascade');
+    $table->timestamps();
+});
     }
 
     /**

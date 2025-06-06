@@ -18,10 +18,14 @@ return new class extends Migration
     $table->string('misi');
     $table->string('photo')->nullable();
     $table->unsignedBigInteger('wilayah_id');
+    $table->unsignedBigInteger('jabatan_id'); // Tambahkan ini
     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     $table->foreign('wilayah_id')->references('id')->on('wilayah')->onDelete('cascade');
+    $table->foreign('jabatan_id')->references('id')->on('jabatan')->onDelete('cascade'); // foreign key
+
     $table->timestamps();
 });
+
     }
 
     /**
