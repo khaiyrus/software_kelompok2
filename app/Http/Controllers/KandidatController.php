@@ -22,7 +22,7 @@ class KandidatController extends Controller
     }
     public function profile_add()
     {
-        $wilayah = WilayahModel::where('level', 'kabupaten')->get();
+        $wilayah = WilayahModel::all();
         $jabatan = Jabatan::all();
         return view('kandidat.add_profile', compact('wilayah', 'jabatan'));
     }

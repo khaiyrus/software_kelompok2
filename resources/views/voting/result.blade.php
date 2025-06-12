@@ -248,7 +248,7 @@
                                 <small class="text-muted">Total Suara</small>
                             </div>
                             <div class="col-md-4 col-12 text-center">
-                                <div class="h4 text-success mb-1">{{ $jumlahVoter/ $acara->voter->count()  * 100 }}</div>
+                                <div class="h4 text-success mb-1">{{ $acara->voter->count() == 0 ? 0 : number_format(($jumlahVoter / $acara->voter->count()) * 100, 2) }}</div>
                                 <small class="text-muted">Partisipasi</small>
                             </div>
                             <div class="col-md-4 col-12 text-center">

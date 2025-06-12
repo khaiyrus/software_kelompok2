@@ -113,7 +113,8 @@
                 <!-- Info Pemilih -->
                 <div class="alert alert-info">
                     <i class="fas fa-user me-2"></i>
-                    Selamat datang, <strong>{{ $voter->nama }}</strong> dari <strong>{{ $voter->wilayah->nama_wilayah }}</strong>
+                    Selamat datang, <strong>{{ $voter->nama }}</strong> dari
+                    <strong>{{ $voter->wilayah->nama_wilayah }}</strong>
                     dalam rangka <p class="text-primary fw-bold mb-1">{{ $voter->acara->acara }}</p>
                 </div>
 
@@ -129,10 +130,10 @@
                 <div class="row g-4 mb-4">
                     @foreach ($kandidat as $ka)
                         <div class="col-md-6">
-                            <div class="card candidate-card" onclick="selectCandidate({{ $ka->kandidat->id }})">
+                            <div class="card candidate-card" onclick="selectCandidate({{ $ka->id }})">
                                 <div class="card-body text-center p-4">
-                                    <img src="{{ asset('storage/'. $ka->photo) }}"
-                                        alt="{{ $ka->kandidat->name }}" class="candidate-photo mb-3">
+                                    <img src="{{ asset('storage/' . $ka->photo) }}" alt="{{ $ka->kandidat->name }}"
+                                        class="candidate-photo mb-3">
 
                                     <div class="candidate-info">
                                         <h5 class="card-title mb-2">{{ $ka->kandidat->name }}</h5>
@@ -141,21 +142,18 @@
 
                                     <div class="mb-3">
                                         <h6 class="text-start mb-2">Visi:</h6>
-                                        <p class="text-muted text-start small">
-                                            {{ $ka->visi }}
-                                        </p>
+                                        <p class="text-muted text-start small">{{ $ka->visi }}</p>
                                     </div>
                                     <div class="mb-3">
                                         <h6 class="text-start mb-2">Misi:</h6>
-                                        <p class="text-muted text-start small">
-                                           {{ $ka->misi }}
-                                        </p>
+                                        <p class="text-muted text-start small">{{ $ka->misi }}</p>
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="terpilih" id="candidate{{ $ka->kandidat->id }}"
-                                            value="{{ $ka->kandidat->id }}">
-                                        <label class="form-check-label fw-bold text-primary" for="candidate{{ $ka->kandidat->id }}">
+                                        <input class="form-check-input" type="radio" name="terpilih"
+                                            id="candidate{{ $ka->id }}" value="{{ $ka->id }}">
+                                        <label class="form-check-label fw-bold text-primary"
+                                            for="candidate{{ $ka->id }}">
                                             <i class="fas fa-check-circle me-2"></i>Pilih Kandidat
                                         </label>
                                     </div>
@@ -163,6 +161,7 @@
                             </div>
                         </div>
                     @endforeach
+
                 </div>
 
                 <div class="alert alert-warning">
@@ -219,9 +218,9 @@
                 return;
             }
 
-            const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-            const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-            const seconds = Math.floor((distance % (1000*60))/1000);
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById("countdownTimer").innerHTML = `${hours} jam ${minutes} menit ${seconds} detik`;
         }
@@ -230,4 +229,5 @@
         updateTimer();
     </script>
 </body>
+
 </html>

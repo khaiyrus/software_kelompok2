@@ -27,11 +27,13 @@ class VoteController extends Controller
             'wilayah' => 'required|string|exists:wilayah,id',
         ]);
 
-        $voter = VoteModel::where([
-            ['nik', $request->nik],
-            ['nama', $request->nama],
-            ['wilayah_id', $request->wilayah],
-        ])->first();
+        $wilayah = WilayahModel::find($request->wilayah);
+
+        if (!$wilayah) {
+            return back()->with(['info' => 'Wilayah tidak ditemukan.']);
+        }
+
+        $voter = VoteModel::where('nik', $request->nik)->where('nama', $request->nama)->where('wilayah_id', $wilayah->id)->first();
 
         if (!$voter) {
             return back()->with(['info' => 'Data pemilih tidak ditemukan.']);
@@ -39,7 +41,11 @@ class VoteController extends Controller
 
         session([
             'voter_id' => $voter->id,
+            'voter_nama' => $voter->nama,
+            'voter_nik' => $voter->nik,
+            'voter_wilayah' => $voter->wilayah_id,
             'voter_voting_model_id' => $voter->voting_model_id,
+            'voter_wilayah_nama' => $wilayah->nama_wilayah,
         ]);
 
         return redirect()->route('voting.formVote');
@@ -50,12 +56,19 @@ class VoteController extends Controller
         $voter = VoteModel::findOrFail(session('voter_id'));
         $acara = $voter->acara;
 
-        // cek deadline
+        // Cek apakah waktu voting habis
         if (now() > $acara->voting_sampai) {
             return redirect()->route('voting.result')->with('info', 'Waktu voting telah habis.');
         }
 
-        $kandidat = CandidateProfile::where('voting_model_id', $acara->id)->get();
+        // Ambil semua wilayah anak (kabupaten/kota) dari wilayah acara (provinsi)
+        $wilayah_anak = WilayahModel::where('parent_id', $acara->wilayah_id)->pluck('id')->toArray();
+
+        // Termasuk provinsi itu sendiri (jika kandidat level provinsi juga boleh muncul)
+        $wilayah_ids = array_merge($wilayah_anak, [$acara->wilayah_id]);
+
+        // Ambil kandidat di wilayah anak-anak itu
+        $kandidat = CandidateProfile::whereIn('wilayah_id', $wilayah_ids)->get();
 
         return view('voting.vote', compact('voter', 'acara', 'kandidat'));
     }
@@ -63,11 +76,27 @@ class VoteController extends Controller
     public function voteSubmit(Request $request)
     {
         $voter = VoteModel::findOrFail(session('voter_id'));
+        $acara = $voter->acara;
 
         if ($voter->status) {
-            return redirect()->route('voting.result')->with(['info' => 'Anda sudah memilih.']);
+            return redirect()
+                ->route('voting.result')
+                ->with(['info' => 'Anda sudah memilih.']);
         }
 
+        // Cek kandidat valid sesuai wilayah acara
+        $wilayah_anak = WilayahModel::where('parent_id', $acara->wilayah_id)->pluck('id')->toArray();
+        $wilayah_ids = array_merge($wilayah_anak, [$acara->wilayah_id]);
+
+        $kandidat = CandidateProfile::whereIn('wilayah_id', $wilayah_ids)->where('id', $request->terpilih)->first();
+
+        if (!$kandidat) {
+            return redirect()
+                ->back()
+                ->with(['info' => 'Kandidat tidak valid.']);
+        }
+
+        // Simpan vote
         VoteHistoryModel::create([
             'vote_id' => $voter->id,
             'voting_model_id' => $voter->voting_model_id,
@@ -76,12 +105,11 @@ class VoteController extends Controller
 
         $voter->update(['status' => true]);
 
-        // Cek apakah semua voter sudah selesai voting
         $jumlahVoter = VoteModel::where('voting_model_id', $voter->voting_model_id)->where('status', true)->count();
         $totalVoter = VoteModel::where('voting_model_id', $voter->voting_model_id)->count();
 
         if ($jumlahVoter == $totalVoter) {
-            $voter->acara->update(['status' => true]);
+            $acara->update(['status' => true]);
         }
 
         return redirect()->route('voting.result');
@@ -90,17 +118,21 @@ class VoteController extends Controller
     public function result()
     {
         $votingId = session('voter_voting_model_id');
-        $pemenang = VoteHistoryModel::select('candidate_id', DB::raw('COUNT(*) as total'))
-            ->where('voting_model_id', $votingId)
-            ->groupBy('candidate_id')
-            ->orderByDesc('total')
-            ->first();
 
-        $winner = User::find($pemenang->candidate_id ?? 0);
+        $pemenang = VoteHistoryModel::select('candidate_id', DB::raw('COUNT(*) as total'))->where('voting_model_id', $votingId)->groupBy('candidate_id')->orderByDesc('total')->first();
+
+        // Cari pemenang kandidat profile
+        $winner = null;
+        if ($pemenang) {
+            $kandidat = CandidateProfile::with('kandidat')->find($pemenang->candidate_id);
+            $winner = $kandidat;
+        }
+
         $acara = VotingModel::find($votingId);
         $jumlahVoter = VoteModel::where('voting_model_id', $votingId)->where('status', true)->count();
+        $voter = VoteModel::findOrFail(session('voter_id'));
 
-        return view('voting.result', compact('winner', 'acara', 'jumlahVoter'));
+        return view('voting.result', compact('winner', 'acara', 'jumlahVoter', 'voter'));
     }
 
     public function keluar()

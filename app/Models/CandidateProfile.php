@@ -8,6 +8,7 @@ class CandidateProfile extends Model
 {
     protected $fillable = [
         'wilayah_id',
+        'jabatan_id',
         'user_id',
         'visi',
         'misi',
@@ -16,6 +17,9 @@ class CandidateProfile extends Model
 
     public function kandidat() {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function jabatan() {
+        return $this->belongsTo(User::class, 'jabatan_id', 'id');
     }
 
     public function wilayah () {

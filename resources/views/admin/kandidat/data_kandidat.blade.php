@@ -21,6 +21,7 @@
                                     <th>Nama</th>
                                     <th>Visi</th>
                                     <th>Misi</th>
+                                    <th>Jabatan</th>
                                     <th>Wilayah</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                         </td>
                                         <td>{{ $a->visi }}</td>
                                         <td>{{ $a->misi }}</td>
+                                        <td>{{ $a->jabatan->nama }}</td>
                                         <td>{{ $a->wilayah->nama_wilayah }}</td>
                                     </tr>
                                 @endforeach
