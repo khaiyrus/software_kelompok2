@@ -35,6 +35,12 @@
                             <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Voter</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.jabatan') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('admin.jabatan') }}">
+                            <i class="align-middle" data-feather="bookmark"></i> <span
+                                class="align-middle">Jabatan</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.wilayah') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.wilayah') }}">
                             <i class="align-middle" data-feather="map"></i> <span class="align-middle">Wilayah</span>
@@ -42,12 +48,6 @@
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.voting') ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('admin.voting') }}">
-                            <i class="align-middle" data-feather="bookmark"></i> <span
-                                class="align-middle">Forms</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item {{ request()->routeIs('admin.galery') ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('admin.galery') }}">
                             <i class="align-middle" data-feather="bookmark"></i> <span
                                 class="align-middle">Forms</span>
                         </a>

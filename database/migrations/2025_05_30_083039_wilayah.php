@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->string('nama_wilayah');
     $table->enum('level', ['kota', 'kabupaten', 'provinsi']);
-    $table->unsignedBigInteger('parent_id')->nullable(); // Wilayah induk
+    $table->unsignedBigInteger('parent_id')->nullable();
     $table->foreign('parent_id')->references('id')->on('wilayah')->onDelete('cascade');
     $table->timestamps();
 });

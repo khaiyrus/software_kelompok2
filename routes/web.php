@@ -28,6 +28,14 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::get('/kandidat', [AdminController::class, 'kandidat'])->name('kandidat');
 
+        Route::get('/jabatan', [AdminController::class, 'jabatan'])->name('jabatan');
+        Route::get('/jabatan_add', [AdminController::class, 'jabatan_add'])->name('jabatan_add');
+        Route::post('/jabatan_add', [AdminController::class, 'jabatan_add_proses'])->name('jabatan_add_proses');
+        Route::get('/jabatan_edit/{id}', [AdminController::class, 'jabatan_edit'])->name('jabatan_edit');
+        Route::get('/jabatan_hapus/{id}', [AdminController::class, 'jabatan_hapus'])->name('jabatan_hapus');
+        Route::post('/jabatan_edit/{id}', [AdminController::class, 'jabatan_edit_proses'])->name('jabatan_edit_proses');
+
+
         Route::get('/wilayah', [AdminController::class, 'wilayah'])->name('wilayah');
         Route::get('/wilayah_add', [AdminController::class, 'wilayah_add'])->name('wilayah_add');
         Route::post('/wilayah_add', [AdminController::class, 'wilayah_add_proses'])->name('wilayah_add_proses');
@@ -73,7 +81,7 @@ Route::middleware(['auth', 'role:kandidat'])
 
 
 
-    
+
 Route::get('/voting', [VoteController::class, 'formCek'])->name('voting.formCek');
 Route::post('/voting', [VoteController::class, 'cek'])->name('voting.cek');
 Route::get('/voting/vote', [VoteController::class, 'formVote'])->name('voting.formVote')->middleware('voterCek');

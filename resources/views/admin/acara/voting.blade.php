@@ -8,10 +8,10 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-                <h1 class="mb-4">Data Admin</h1>
+                <h1 class="mb-4">Data Acara</h1>
 
                 <a href="{{ route('admin.voting_add') }}"class="btn btn-primary mb-3">
-                    Tambah Data
+                    Tambah Acara
                 </a>
 
                 <!-- Card Table -->

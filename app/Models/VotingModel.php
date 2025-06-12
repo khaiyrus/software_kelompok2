@@ -23,4 +23,7 @@ class VotingModel extends Model
     public function voter () {
         return $this->hasMany(VoteModel::class, 'voting_model_id', 'id');
     }
+    public function kandidat() {
+        return $this->hasMany(CandidateProfile::class, 'voting_model_id', 'id');
+    }
 }

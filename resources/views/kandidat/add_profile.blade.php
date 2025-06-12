@@ -14,7 +14,8 @@
                         <h5 class="card-title mb-0">Edit Profil</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('kandidat.profile_add_proses') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('kandidat.profile_add_proses') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3 text-center">
                                 <img src="{{ asset('assets-dashboard') }}/img/avatars/avatar-4.jpg" alt="Foto Profil"
@@ -33,6 +34,21 @@
                             <div class="mb-3">
                                 <label for="misi" class="form-label">Misi</label>
                                 <textarea class="form-control" id="misi" name="misi" rows="2" placeholder="Textarea"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="label">Pilih Jabatan</label>
+                                <div class="form-group position-relative">
+                                    <select name="jabatan_id" class="form-select form-control ps-5 h-58"
+                                        aria-label="Pilih Jabatan" required>
+                                        <option value="" disabled selected>Pilih Jabatan</option>
+                                        @foreach ($jabatan as $j)
+                                            <option value="{{ $j->id }}" class="text-dark">{{ $j->nama}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <i
+                                        class="ri-briefcase-line position-absolute top-50 start-0 translate-middle-y fs-20 text-gray-light ps-20"></i>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="label">Pilih Wilayah</label>

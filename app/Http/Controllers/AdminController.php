@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CandidateProfile;
+use App\Models\Jabatan;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\VoteModel;
@@ -59,6 +60,60 @@ class AdminController extends Controller
         return view('admin.kandidat.add_candidat', compact('wilayah'));
     }
 
+    public function jabatan()
+    {
+        $jabatan = Jabatan::all();
+        return view('admin.jabatan.data_jabatan', compact('jabatan'));
+    }
+
+    public function jabatan_add()
+    {
+        return view('admin.jabatan.jabatan_add');
+    }
+    public function jabatan_add_proses(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'level' => 'required|in:kota,kabupaten,provinsi',
+        ]);
+
+        // dd($request->all());
+        jabatan::create([
+            'nama' => $request->nama,
+            'level' => $request->level,
+        ]);
+
+        // Redirect atau tampilkan notifikasi
+        return redirect()->route('admin.jabatan')->with('success');
+    }
+
+    public function jabatan_hapus($id)
+    {
+        $jabatan = Jabatan::where('id', $id)->first();
+        $jabatan->delete();
+
+        return redirect()->route('admin.jabatan');
+    }
+    public function jabatan_edit($id)
+    {
+        $jabatan = Jabatan::where('id', $id)->first();
+        return view('admin.jabatan.jabatan_edit', compact('jabatan'));
+    }
+    public function jabatan_edit_proses(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'level' => 'required|string',
+        ]);
+
+        $jabatan = Jabatan::where('id', $id)->first();
+
+        $jabatan->nama = $request->nama;
+        $jabatan->level = $request->level;
+        $jabatan->save();
+
+        return redirect()->route('admin.jabatan');
+    }
 
     // wilayah/////////////////////////////////////////////////////////////////////////////////////////
     public function wilayah()
@@ -87,23 +142,25 @@ class AdminController extends Controller
     }
     public function wilayah_add()
     {
-        return view('admin.wilayah.wilayah_add');
+        $parentWilayah = WilayahModel::all();
+        return view('admin.wilayah.wilayah_add', compact('parentWilayah'));
     }
     public function wilayah_add_proses(Request $request)
     {
         $request->validate([
             'nama_wilayah' => 'required|string',
+            'level' => 'required|in:kota,kabupaten,provinsi',
+            'parent_id' => 'nullable|exists:wilayah,id',
         ]);
 
-        // dd($request->all());
         WilayahModel::create([
             'nama_wilayah' => $request->nama_wilayah,
+            'level' => $request->level,
+            'parent_id' => $request->parent_id,
         ]);
 
-        // Redirect atau tampilkan notifikasi
-        return redirect()->route('admin.wilayah')->with('success');
+        return redirect()->route('admin.wilayah')->with('success', 'Wilayah berhasil ditambahkan!');
     }
-
     public function wilayah_hapus($id)
     {
         $wilayah = WilayahModel::where('id', $id)->first();
@@ -120,7 +177,7 @@ class AdminController extends Controller
     }
     public function voter_add()
     {
-        $wilayah = WilayahModel::all();
+        $wilayah = WilayahModel::where('level', 'kota')->get();
         $acara = VotingModel::all();
         return view('admin.voter.add_voter', compact('wilayah', 'acara'));
     }

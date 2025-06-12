@@ -98,17 +98,15 @@
     </style>
 </head>
 
-{{-- @dd($voter) --}}
 <body>
     <div class="container py-4">
         <div class="voting-container p-5">
             <div class="text-center mb-4">
                 <div class="card-body pt-5 mt-4">
-                                            <a href="/"
-                                                class="btn btn-outline-primary position-absolute top-0 start-0 m-3">
-                                                ← Back
-                                            </a>
-                                        </div>
+                    <a href="/" class="btn btn-outline-primary position-absolute top-0 start-0 m-3">
+                        ← Back
+                    </a>
+                </div>
                 <i class="fas fa-vote-yea fa-3x text-primary mb-3"></i>
                 <h1 class="header-title">Pilih Kandidat Anda</h1>
 
@@ -119,22 +117,22 @@
                     dalam rangka <p class="text-primary fw-bold mb-1">{{ $voter->acara->acara }}</p>
                 </div>
 
-                <!-- Timer Voting (opsional) -->
+                <!-- Timer Voting -->
                 <div class="voting-timer text-center mb-3">
                     <i class="fas fa-clock me-2"></i>
-                    <strong>Waktu Tersisa:</strong> <span class="text-warning">2 jam 35 menit</span>
+                    <strong>Waktu Tersisa:</strong> <span class="text-warning" id="countdownTimer">Memuat...</span>
                 </div>
             </div>
 
             <form id="votingForm" action="{{ route('voting.submit') }}" method="POST">
                 @csrf
                 <div class="row g-4 mb-4">
-                    @foreach ($voter->wilayah->profil as $ka)
+                    @foreach ($kandidat as $ka)
                         <div class="col-md-6">
                             <div class="card candidate-card" onclick="selectCandidate({{ $ka->kandidat->id }})">
                                 <div class="card-body text-center p-4">
                                     <img src="{{ asset('storage/'. $ka->photo) }}"
-                                        alt="Dr. Andi Wijaya" class="candidate-photo mb-3">
+                                        alt="{{ $ka->kandidat->name }}" class="candidate-photo mb-3">
 
                                     <div class="candidate-info">
                                         <h5 class="card-title mb-2">{{ $ka->kandidat->name }}</h5>
@@ -167,14 +165,12 @@
                     @endforeach
                 </div>
 
-                <!-- Peringatan -->
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle me-2"></i>
                     <strong>Perhatian:</strong> Pilihan Anda tidak dapat diubah setelah submit. Pastikan pilihan Anda
                     sudah benar.
                 </div>
 
-                <!-- Tombol Aksi -->
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <a href="{{ route('keluar') }}" class="btn btn-outline-secondary w-100">
@@ -192,51 +188,46 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
     <script>
         function selectCandidate(candidateId) {
-            // Reset semua card
             document.querySelectorAll('.candidate-card').forEach(card => {
                 card.classList.remove('selected');
             });
 
-            // Pilih kandidat yang diklik
             const selectedCard = document.querySelector(`#candidate${candidateId}`).closest('.candidate-card');
             selectedCard.classList.add('selected');
             document.querySelector(`#candidate${candidateId}`).checked = true;
 
-            // Enable submit button
             document.getElementById('submitVote').disabled = false;
         }
 
-
-        // Timer countdown (opsional - untuk demo)
-        let timeLeft = 2 * 3600 + 35 * 60; // 2 jam 35 menit dalam detik
+        // Timer dari server (backend)
+        const deadline = new Date("{{ $voter->acara->voting_sampai }}").getTime();
 
         function updateTimer() {
-            const hours = Math.floor(timeLeft / 3600);
-            const minutes = Math.floor((timeLeft % 3600) / 60);
-            const seconds = timeLeft % 60;
+            const now = new Date().getTime();
+            const distance = deadline - now;
 
-            document.querySelector('.voting-timer span').textContent =
-                `${hours} jam ${minutes} menit ${seconds} detik`;
-
-            if (timeLeft > 0) {
-                timeLeft--;
-            } else {
-                document.querySelector('.voting-timer span').textContent = 'Waktu habis!';
-                document.querySelector('.voting-timer span').className = 'text-danger';
-                // Disable form jika waktu habis
-                document.getElementById('submitVote').disabled = true;
-                document.querySelectorAll('input[name="candidate"]').forEach(input => {
+            if (distance < 0) {
+                document.getElementById("countdownTimer").innerHTML = "Waktu habis!";
+                document.getElementById("countdownTimer").className = 'text-danger';
+                document.getElementById("submitVote").disabled = true;
+                document.querySelectorAll('input[name="terpilih"]').forEach(input => {
                     input.disabled = true;
                 });
+                return;
             }
+
+            const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+            const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+            const seconds = Math.floor((distance % (1000*60))/1000);
+
+            document.getElementById("countdownTimer").innerHTML = `${hours} jam ${minutes} menit ${seconds} detik`;
         }
 
-        // Update timer setiap detik
         setInterval(updateTimer, 1000);
-        updateTimer(); // Jalankan sekali saat load
+        updateTimer();
     </script>
 </body>
-
 </html>

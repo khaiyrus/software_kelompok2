@@ -6,6 +6,7 @@ use App\Models\WilayahModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CandidateProfile;
+use App\Models\Jabatan;
 use App\Models\User;
 
 class KandidatController extends Controller
@@ -21,8 +22,9 @@ class KandidatController extends Controller
     }
     public function profile_add()
     {
-        $wilayah = WilayahModel::all();
-        return view('kandidat.add_profile', compact('wilayah'));
+        $wilayah = WilayahModel::where('level', 'kabupaten')->get();
+        $jabatan = Jabatan::all();
+        return view('kandidat.add_profile', compact('wilayah', 'jabatan'));
     }
 
     public function profile_add_proses(Request $request)
@@ -33,6 +35,7 @@ class KandidatController extends Controller
             'visi' => 'required|string|min:10|max:255',
             'misi' => 'required|string|min:10|max:255',
             'wilayah_id' => 'required|exists:wilayah,id',
+            'jabatan_id' => 'required|exists:jabatan,id',
         ]);
 
         // dd($request->all());
@@ -63,6 +66,7 @@ class KandidatController extends Controller
         $profile->visi = $request->visi;
         $profile->misi = $request->misi;
         $profile->wilayah_id = $request->wilayah_id;
+        $profile->jabatan_id = $request->jabatan_id;
         $profile->save();
 
         return redirect()->route('kandidat.profile')->with('success', 'Profil kandidat berhasil diperbarui.');
